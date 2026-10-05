@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>For You ♡</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,500;1,500&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: #111;
+      color: white;
+      overflow: hidden;
+    }
+
+    /* =========================
+       GLOBAL
+    ========================= */
+
+    .page {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 25px;
+      overflow: hidden;
+    }
+
+    .page.active {
+      display: flex;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(1.03);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .content {
+      width: 100%;
+      max-width: 700px;
+      z-index: 5;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(38px, 8vw, 70px);
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(30px, 6vw, 50px);
+      margin-bottom: 15px;
+    }
+
+    p {
+      line-height: 1.8;
+      color: #f1f1f1;
+    }
+
+    .small {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    /* =========================
+       BUTTON
+    ========================= */
+
+    button {
+      border: none;
+      padding: 14px 25px;
+      border-radius: 999px;
+      background: #ff6f91;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: 0.3s;
+      box-shadow: 0 10px 30px rgba(255, 111, 145, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-3px) scale(1.04);
+    }
+
+    .secondary {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: none;
+    }
+
+    /* =========================
+       PAGE 1
+    ========================= */
+
+    #home {
+      background:
+        linear-gradient(
+          rgba(20, 10, 25, 0.35),
+          rgba(20, 10, 25, 0.65)
+        ),
+        url("background 1.jpg")
+        center/cover;
+    }
+
+    #home::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(0,0,0,0.6)
+      );
+    }
+
+    .home-text {
+      position: relative;
+    }
+
+    .home-text .mini {
+      letter-spacing: 4px;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    /* =========================
+       PAGE 2
+    ========================= */
+
+    #special {
+      background: #fff4f5;
+      color: #3d2930;
+    }
+
+    #special p {
+      color: #644b54;
+    }
+
+    .letter {
+      background: rgba(255,255,255,0.9);
+      color: #3d2930;
+      padding: 35px;
+      border-radius: 25px;
+      max-width: 650px;
+      margin: auto;
+      box-shadow: 0 20px 60px rgba(100, 50, 70, 0.12);
+      text-align: left;
+    }
+
+    .letter p {
+      color: #604b52;
+    }
+
+    .signature {
+      margin-top: 25px;
+      text-align: right;
+      font-family: "Playfair Display", serif;
+      font-size: 20px;
+    }
+
+    /* =========================
+       PAGE 3
+    ========================= */
+
+    #memories {
+      background: #f9e9e9;
+      color: #3d2930;
+    }
+
+    #memories p {
+      color: #654f57;
+    }
+
+    .photos {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .photo {
+      width: 150px;
+      height: 190px;
+      padding: 8px;
+      background: white;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      transform: rotate(-3deg);
+    }
+
+    .photo:nth-child(2) {
+      transform: rotate(4deg);
+    }
+
+    .photo:nth-child(3) {
+      transform: rotate(-2deg);
+    }
+
+    .photo img {
+      width: 100%;
+      height: 145px;
+      object-fit: cover;
+    }
+
+    .photo span {
+      display: block;
+      font-family: "Playfair Display", serif;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    /* =========================
+       PAGE 4
+    ========================= */
+
+    #message {
+      background: linear-gradient(135deg, #ffcad4, #ffe7ec);
+      color: #3c252c;
+    }
+
+    .message-box {
+      background: rgba(255,255,255,0.8);
+      padding: 40px;
+      border-radius: 30px;
+      box-shadow: 0 20px 60px rgba(120, 40, 60, 0.15);
+    }
+
+    .message-box p {
+      color: #553a42;
+    }
+
+    /* =========================
+       PAGE 5
+    ========================= */
+
+    #question {
+      background: #121426;
+    }
+
+    .question-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    /* =========================
+       PAGE 6
+    ========================= */
+
+    #ending {
+      background:
+        linear-gradient(
+          rgba(10, 10, 20, 0.3),
+          rgba(10, 10, 20, 0.7)
+        ),
+        url("background 2.jpg")
+        center/cover;
+    }
+
+    .ending h1 {
+      font-style: italic;
+    }
+
+    /* =========================
+       HEARTS
+    ========================= */
+
+    .heart {
+      position: fixed;
+      bottom: -30px;
+      font-size: 20px;
+      animation: floatHeart linear forwards;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* =========================
+       MUSIC BUTTON
+    ========================= */
+
+    .music {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      padding: 0;
+      margin: 0;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: none;
+      z-index: 100;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      .letter {
+        padding: 25px;
+      }
+
+      .photo {
+        width: 105px;
+        height: 140px;
+      }
+
+      .photo img {
+        height: 100px;
+      }
+
+      .message-box {
+        padding: 25px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- MUSIC -->
+  <audio id="music" loop>
+    <!-- GANTI DENGAN FILE MUSIK KAMU -->
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="music" onclick="toggleMusic()">♫</button>
+
+
+  <!-- =========================
+       PAGE 1
+  ========================= -->
+
+  <section class="page active" id="home">
+
+    <div class="content home-text">
+
+      <div class="mini">
+        A LITTLE SOMETHING FOR YOU ♡
+      </div>
+
+      <h1>HAII MY BABYYY</h1>
+
+      <p>
+        Adaa sedikit sesuatu yang ingin akuu sampaikan
+        buat kamuu bae
+        <br>
+        soo jangan di skipp yaa;]
+      </p>
+
+      <button onclick="nextPage('special')">
+        KLIK DISINI NYAKK
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       PAGE 2
+  ========================= -->
+
+  <section class="page" id="special">
+
+    <div class="content">
+
+      <h2>why am I so lucky to have you?</h2>
+
+      <div class="letter">
+
+        <p>
+          kenapaa akuu sangatt beruntungg punyaa kamuu.. 
+          karenaa sejak adaa kamuu hidup terasa lebihh berarti, 
+          akuu merasaa lebih dihargaii, dibanggai dan ada bahkan dunia terasa berwarna kembali setalah kehadiran kamuu baee.
+        </p>
+
+        <br>
+
+        <p>
+         setelah akuu lama "jones" akuu tidakk mau lagi in relationship, butt...
+         i met youu, my love. dimaana kamuu ITUU WANITAA YANG KUU IMPIKANN SELAMAA INII DAN BERUNTUNGG NYAA I'VE GOT YOU BABYYY.
+         a woman who is beautiful both in heart and in appearance, LIKE WTH R U AN ANGEL BABEE??
+        </p>
+
+        <br>
+
+        <p>
+          wajah mu yangg begituu sangatt cantik, teduh, dan maniss
+          serta sifat muu yang penyabar, mature, dan pengertiaan ini membuat kuu trbuka lagii untuk jatuh hatii.
+          that's why I'm lucky to have you darling... WLEK
+        </p>
+
+        <div class="signature">
+          — from raflyFOMOK
+        </div>
+
+      </div>
+
+      <button onclick="nextPage('memories')">
+        Lanjut sayangg
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       PAGE 3
+  ========================= -->
+
+  <section class="page" id="memories">
+
+    <div class="content">
+
+      <h2>MY FAV GIRL</h2>
+
+      <p>
+        beberapaa foto yang kamuu kirimm ituu penyamangat hidupku
+        dan rasa syukur betapa hokinya akuu mendapatkan kamuu
+      </p>
+
+      <div class="photos">
+
+        <div class="photo">
+
+          <!-- GANTI FOTO -->
+          <img src="my fav 1.jpeg">
+
+          <span>
+            #WIFEDAT
+          </span>
+
+        </div>
+
+        <div class="photo">
+
+          <!-- GANTI FOTO -->
+          <img src="me n u.jpeg">
+
+          <span>
+            lonely boi + lonely girl (me n u)
+          </span>
+
+        </div>
+
+        <div class="photo">
+
+          <!-- GANTI FOTO -->
+          <img src="my fav 2.jpeg">
+
+          <span>
+            my favorite one
+          </span>
+
+        </div>
+
+      </div>
+
+      <button onclick="nextPage('message')">
+        emmm ada satu hal lagi...
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       PAGE 4
+  ========================= -->
+
+  <section class="page" id="message">
+
+    <div class="content">
+
+      <div class="message-box">
+
+        <h2>pesan untuk kamuu sayangg</h2>
+
+        <p>
+          thank youu so much for coming into my life, my love.
+        </p>
+
+        <br>
+
+        <p>
+          maap yaa kalauu akuu banyakk kurangnya dari hal apapun ituu, tapi.. akuu akan selaluu berusaha ngasihh kamuu yang terbaikk babee dan menjadii bf yang terbaik dalam hidup mu
+          maapin akuu ya kalauu akuu ada salahh sama kamuu maupun kecil atau besarr.. akuu bakal selalu belajar dari kesalahann" dan berusaha untuk tidak mengulangi lagii
+          akuu akann selaluu menyayangimu serta mencintaimuu dengann lubukk hatii paling dalamm dan akuu bakal treat dengan sehati kuu tanpa membawa mood kuu INSYAALLAH
+        </p>
+
+        <br>
+
+        <p>
+         akuu akan teruss menemani serta mendukungmu dalam keadaan apapun sayangg, kitaa akan sukses bersamaa dan kitaa akan menghabiskan waktuu bersamaa
+         semogaa kitaa dapat dipertemukann yaa, AMINNN PALING KENCENGG.
+         jaga kesehatannya teruss yaa sayangg, jangann lupaa untuk mamm dan mumm.
+         kamuu semangatt teruss yaa sayangg, jalanii semuanyaa dengann santaii akuu tau kokk kamuu pasti bisaa dan jangann lupaa untuk beristirahat jugaa.
+         jangan bawa semuany jadii beratt nyak, semogaa kamuu dapat menggapai apa yangg kamuu inginkann nyakk my lovee.
+        </p>
+
+        <br>
+
+        <p>
+          terimakasihh banyakk yaa sayangg udah mau bacaa, mungkinn sekiann darii akuu sayangg.
+           (anti ai nyak kecuali codingannya aku di bantu ai)
+        </p>
+
+        <br>
+
+        <strong>
+         I LOVE U SO MUCH MORE N MOST BABYY
+        </strong>
+
+      </div>
+
+      <button onclick="nextPage('question')">
+        Last..
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       PAGE 5
+  ========================= -->
+
+  <section class="page" id="question">
+
+    <div class="content">
+
+      <div class="small">
+        ONE LAST QUESTION...
+      </div>
+
+      <h2>
+        Kamu mau tetap<br>
+        sama aku?
+      </h2>
+
+      <p>
+        pastiin jawabanmu yaa sayangg
+      </p>
+
+      <div class="question-buttons">
+
+        <button onclick="yesAnswer()">
+          mauu bangett hingga akhir hidupp
+        </button>
+
+        <button class="secondary" onclick="thinkAnswer()">
+          hmmm.. lemme think
+        </button>
+
+      </div>
+
+      <p id="answerText" style="margin-top:25px;"></p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       PAGE 6
+  ========================= -->
+
+  <section class="page" id="ending">
+
+    <div class="content">
+
+      <div class="small">
+        FOR MY FAVORITE PERSON
+      </div>
+
+      <h1>
+        THANKYOU<br>
+        untuk selalu adaa.
+      </h1>
+
+      <p>
+        Jangan lupa...
+        kamuu itu berharga sayangg
+      </p>
+
+      <br>
+
+      <p>
+        Dan akuu bersyukur bisa mengenal kamuu.
+      </p>
+
+      <h2 style="margin-top:30px;">
+        LOVE U MUAH
+      </h2>
+
+      <button onclick="nextPage('home')">
+        ↻ Mulai lagi
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <script>
+
+    /* =========================
+       PAGE NAVIGATION
+    ========================= */
+
+    function nextPage(pageId) {
+
+      document.querySelectorAll(".page")
+        .forEach(page => {
+          page.classList.remove("active");
+        });
+
+      document.getElementById(pageId)
+        .classList.add("active");
+
+      window.scrollTo(0, 0);
+
+      createHearts(5);
+    }
+
+
+    /* =========================
+       HEART ANIMATION
+    ========================= */
+
+    function createHeart() {
+
+      const heart = document.createElement("div");
+
+      heart.className = "heart";
+
+      heart.innerHTML = ["♡", "♥", "❤", "♡"][Math.floor(Math.random() * 4)];
+
+      heart.style.left =
+        Math.random() * 100 + "vw";
+
+      heart.style.fontSize =
+        (15 + Math.random() * 20) + "px";
+
+      heart.style.animationDuration =
+        (4 + Math.random() * 4) + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 8000);
+    }
+
+
+    function createHearts(amount) {
+
+      for (let i = 0; i < amount; i++) {
+
+        setTimeout(() => {
+          createHeart();
+        }, i * 250);
+
+      }
+    }
+
+
+    /* =========================
+       MUSIC
+    ========================= */
+
+    const music =
+      document.getElementById("music");
+
+    let playing = false;
+
+
+    function toggleMusic() {
+
+      if (playing) {
+
+        music.pause();
+
+        playing = false;
+
+      } else {
+
+        music.play();
+
+        playing = true;
+
+      }
+
+    }
+
+
+    /* =========================
+       QUESTION
+    ========================= */
+
+    function yesAnswer() {
+
+      document.getElementById("answerText")
+        .innerHTML =
+        "Hehe, aku senyum sekarang ♡";
+
+      createHearts(15);
+
+      setTimeout(() => {
+
+        nextPage("ending");
+
+      }, 1800);
+
+    }
+
+
+    function thinkAnswer() {
+
+      document.getElementById("answerText")
+        .innerHTML =
+        "Yah... aku tunggu jawabannya ya 🥺";
+
+      createHearts(5);
+
+    }
+
+
+    /* =========================
+       RANDOM HEARTS
+    ========================= */
+
+    setInterval(() => {
+
+      createHeart();
+
+    }, 1800);
+
+  </script>
+
+</body>
+</html>
